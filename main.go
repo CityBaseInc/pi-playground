@@ -3,7 +3,14 @@ package main
 import (
 	"fmt"
 	"log"
+
 	"github.com/d2r2/go-dht"
+	logger "github.com/d2r2/go-logger"
+)
+
+var lg = logger.NewPackageLogger("main",
+	logger.InfoLevel,
+	logger.ChangePackageLogLevel("dht", logger.InfoLevel)
 )
 
 func main() {
@@ -15,7 +22,7 @@ func main() {
 	// Note: "boost GPIO performance" parameter is not work anymore from some
 	// specific Go release. Never put true value here.
 	temperature, humidity, retried, err :=
-		dht.ReadDHTxxWithRetry(dht.DHT22, 22, false, 3)
+		dht.ReadDHTxxWithRetry(dht.DHT22, 22, false, 10)
 	if err != nil {
 		log.Fatal(err)
 	}
