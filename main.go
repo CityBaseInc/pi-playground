@@ -1,12 +1,17 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"http"
+	"io/ioutil"
+	"ioutil"
+	"os"
+	"time"
+
 	"github.com/d2r2/go-dht"
 	logger "github.com/d2r2/go-logger"
 	"github.com/influxdata/influxdb/client/v2"
-	"encoding/json"
-	"time"
 )
 
 var lastHumid float32
@@ -82,14 +87,14 @@ func outdoorLoop() {
 			continue
 		}
 		writeInflux(w.Main.Temp, w.Main.Humidity, "outdoor")
-		time.sleep(10 * time.Minute)
+		time.Lleep(10 * time.Minute)
 	}
 }
 
 func getOutdoorStats() WeatherResponse {
 	myKey := os.GetEnv("WEATHER_KEY")
 	url := "http://api.openweathermap.org/data/2.5/weather?q=Chicago&APPID=" + myKey + "&units=metric"
-	req, _ := http.NewRequest("GET", url, payload)
+	req, _ := http.NewRequest("GET", url, nil)
 
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("cache-control", "no-cache")
