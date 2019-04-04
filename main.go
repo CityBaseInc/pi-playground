@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/d2r2/go-dht"
@@ -32,7 +31,7 @@ func getSensorData() (float32, float32) {
 	temperature, humidity, _, err :=
 		dht.ReadDHTxxWithRetry(dht.DHT22, 22, false, 10)
 	if err != nil {
-		log.Error(err)
+		fmt.Println(err)
 		return lastTemp, lastHumid
 	}
 	lastHumid = humidity
