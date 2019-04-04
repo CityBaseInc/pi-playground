@@ -1,13 +1,12 @@
 package main
 
-
 import (
 	"fmt"
-	"time"
-	"json"
 	"github.com/d2r2/go-dht"
 	logger "github.com/d2r2/go-logger"
 	"github.com/influxdata/influxdb/client/v2"
+	"encoding/json"
+	"time"
 )
 
 var lastHumid float32
@@ -19,10 +18,11 @@ var lg = logger.NewPackageLogger("main",
 
 func main() {
 	logger.ChangePackageLogLevel("dht", logger.ErrorLevel)
+	go outdoorLoop()
 	for {
 		t, h := getSensorData()
 		fmt.Printf("Temp is %v, humidity is: %v\n", t, h)
-		writeInflux(t, h)
+		writeInflux(t, h, "indoor")
 		time.Sleep(10 * time.Second)
 	}
 	return
@@ -40,7 +40,7 @@ func getSensorData() (float32, float32) {
 	return temperature, humidity
 }
 
-func writeInflux(temp float32, hum float32) {
+func writeInflux(temp interface{}, hum interface{}, loc string) {
 	// Make client
 	c, err := client.NewHTTPClient(client.HTTPConfig{
 		Addr: "http://localhost:8086",
@@ -58,7 +58,7 @@ func writeInflux(temp float32, hum float32) {
 	})
 
 	// Create a point and add to batch
-	tags := map[string]string{"weather": "current"}
+	tags := map[string]string{"location": loc}
 	fields := map[string]interface{}{
 		"temp":     temp,
 		"humidity": hum,
@@ -75,6 +75,17 @@ func writeInflux(temp float32, hum float32) {
 	return
 }
 
+func outdoorLoop() {
+	for {
+		w := getOutdoorStats()
+		if w.Main.Temp == 0 {
+			continue
+		}
+		writeInflux(w.Main.Temp, w.Main.Humidity, "outdoor")
+		time.sleep(10 * time.Minute)
+	}
+}
+
 func getOutdoorStats() WeatherResponse {
 	myKey := os.GetEnv("WEATHER_KEY")
 	url := "http://api.openweathermap.org/data/2.5/weather?q=Chicago&APPID=" + myKey + "&units=metric"
@@ -89,9 +100,8 @@ func getOutdoorStats() WeatherResponse {
 	body, _ := ioutil.ReadAll(res.Body)
 
 	fmt.Println(res)
-	fmt.Println(string(body))
 	w := WeatherResponse{}
-	json.Unmarshall(body, &w)
+	json.Unmarshal(body, &w)
 	return w
 }
 
