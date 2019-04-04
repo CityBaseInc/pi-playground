@@ -3,9 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"http"
 	"io/ioutil"
-	"ioutil"
+	"net/http"
 	"os"
 	"time"
 
