@@ -10,7 +10,6 @@ import (
 
 var lg = logger.NewPackageLogger("main",
 	logger.InfoLevel,
-	logger.ChangePackageLogLevel("dht", logger.InfoLevel),
 )
 
 func main() {
