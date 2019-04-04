@@ -46,6 +46,7 @@ func getSensorData() (float32, float32) {
 
 func writeInflux(temp float32, hum float32, loc string) {
 	// Make client
+	tfixed := ((temp * 9) / 5) + 32
 	c, err := client.NewHTTPClient(client.HTTPConfig{
 		Addr: "http://localhost:8086",
 	})
@@ -66,6 +67,7 @@ func writeInflux(temp float32, hum float32, loc string) {
 	fields := map[string]interface{}{
 		"temp":     temp,
 		"humidity": hum,
+		"tempf":    tfixed,
 	}
 	pt, err := client.NewPoint("weather", tags, fields, time.Now())
 	if err != nil {
