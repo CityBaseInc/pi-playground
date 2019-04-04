@@ -15,14 +15,6 @@ var lg = logger.NewPackageLogger("main",
 
 func main() {
 	logger.ChangePackageLogLevel("dht", logger.ErrorLevel)
-	// temperature, humidity, retried, err :=
-	// 	dht.ReadDHTxxWithRetry(dht.DHT22, 22, false, 10)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// // Print temperature and humidity
-	// fmt.Printf("Temperature = %v*C, Humidity = %v%% (retried %d times)\n",
-	// 	temperature, humidity, retried)
 	for {
 		t, h := getSensorData()
 		fmt.Printf("Temp is %v, humidity is: %v\n", t, h)
