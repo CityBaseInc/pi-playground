@@ -86,12 +86,12 @@ func outdoorLoop() {
 			continue
 		}
 		writeInflux(w.Main.Temp, w.Main.Humidity, "outdoor")
-		time.Lleep(10 * time.Minute)
+		time.Sleep(10 * time.Minute)
 	}
 }
 
 func getOutdoorStats() WeatherResponse {
-	myKey := os.GetEnv("WEATHER_KEY")
+	myKey := os.Getenv("WEATHER_KEY")
 	url := "http://api.openweathermap.org/data/2.5/weather?q=Chicago&APPID=" + myKey + "&units=metric"
 	req, _ := http.NewRequest("GET", url, nil)
 
