@@ -1,4 +1,4 @@
-module github.com/CityBaseInc/pi-playground
+module github.com/lbrictson/pi-playground
 
 go 1.12
 
@@ -8,5 +8,4 @@ require (
 	github.com/d2r2/go-shell v0.0.0-20181221082743-874cb5c847b3 // indirect
 	github.com/influxdata/influxdb v1.7.5
 	github.com/influxdata/platform v0.0.0-20190117200541-d500d3cf5589 // indirect
-	github.com/stianeikeland/go-rpio/v4 v4.4.0 // indirect
 )
