@@ -6,3 +6,10 @@ github.com/d2r2/go-logger
 github.com/d2r2/go-shell
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
+# github.com/influxdata/influxdb v1.7.5
+github.com/influxdata/influxdb/client/v2
+github.com/influxdata/influxdb/models
+github.com/influxdata/influxdb/pkg/escape
+# github.com/influxdata/platform v0.0.0-20190117200541-d500d3cf5589
+github.com/influxdata/platform/models
+github.com/influxdata/platform/pkg/escape
