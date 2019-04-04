@@ -44,7 +44,7 @@ func getSensorData() (float32, float32) {
 	return temperature, humidity
 }
 
-func writeInflux(temp interface{}, hum interface{}, loc string) {
+func writeInflux(temp float32, hum float32, loc string) {
 	// Make client
 	c, err := client.NewHTTPClient(client.HTTPConfig{
 		Addr: "http://localhost:8086",
@@ -86,7 +86,7 @@ func outdoorLoop() {
 			continue
 		}
 		fmt.Printf("outdoor temp: %v hum: %v\n", w.Main.Temp, w.Main.Humidity)
-		writeInflux(w.Main.Temp, w.Main.Humidity, "outdoor")
+		writeInflux(float32(w.Main.Temp), float32(w.Main.Humidity), "outdoor")
 		time.Sleep(10 * time.Minute)
 	}
 }
