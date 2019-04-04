@@ -10,8 +10,8 @@ import (
 	"github.com/influxdata/influxdb/client/v2"
 )
 
-var lastHumid float64
-var lastTemp float64
+var lastHumid float32
+var lastTemp float32
 
 var lg = logger.NewPackageLogger("main",
 	logger.InfoLevel,
