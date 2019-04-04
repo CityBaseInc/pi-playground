@@ -23,7 +23,7 @@ func main() {
 	// fmt.Printf("Temperature = %v*C, Humidity = %v%% (retried %d times)\n",
 	// 	temperature, humidity, retried)
 	t, h := getSensorData()
-	fmt.Printf("Temp is %v, humidity is: %v", t, h)
+	fmt.Printf("Temp is %v, humidity is: %v\n", t, h)
 	return
 }
 
