@@ -85,6 +85,7 @@ func outdoorLoop() {
 		if w.Main.Temp == 0 {
 			continue
 		}
+		fmt.Printf("outdoor temp: %v hum: %v\n", w.Main.Temp, w.Main.Humidity)
 		writeInflux(w.Main.Temp, w.Main.Humidity, "outdoor")
 		time.Sleep(10 * time.Minute)
 	}
